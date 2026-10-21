@@ -27,6 +27,10 @@ Everything else comes from the Checkatrade profile https://www.checkatrade.com/t
 
 The services list is drawn from the job types in the reviews (EV charger installation, EICR, safety checks, extension electrics, certification and remedial work), since only EV charger installation is listed under Skills.
 
+## Site-wide type and motion
+
+Titles and body copy use Space Grotesk (mono is kept for labels and buttons, serif italic for accent words). Section titles rise in word by word, key phrases get a highlighter swipe, big outlined section and card numbers sit behind the content, and cards, facts, steps, photos and contact rows stagger in. Light runs along section edges, the stats strip and the footer. To switch all of it off and get the earlier look back, remove the `sitefx` class from `<body>`. Looping animation pauses when a section is off-screen and everything turns off under `prefers-reduced-motion`.
+
 ## Reviews section
 
 The Testimonials section has a bright sky-blue look with motion: a ticker of the words customers use, an animated rating gauge, cards that deal in and tilt toward the mouse, and drifting light and bolts. To go back to the plain pale version, remove the `rvfx` class from `<section id="reviews">`. All of its looping animation pauses when the section is off-screen and turns off under `prefers-reduced-motion`.

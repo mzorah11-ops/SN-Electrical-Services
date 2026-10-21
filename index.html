@@ -16,7 +16,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 
 <script>
 (function(d){d.classList.add('js');
@@ -668,10 +668,164 @@ p.is-ph{display:inline-block;margin-top:18px}
 @media (hover:hover){.rvfx .btn--arc:hover{background:linear-gradient(135deg,#0F7FE0,#0A3F8A);border-color:#0A3F8A}}
 
 @media (prefers-reduced-motion:reduce){.rvfx .rv-ticker,.rvfx .rv-top::after,.rvfx .review::after,.rvfx .btn--arc::after,.rvfx .rv-badge::after{display:none}}
+
+/* ───────── Site-wide: livelier type + motion ─────────
+   Everything below is scoped to .sitefx. Remove that class from <body> and the original look returns.
+   Type: Space Grotesk for titles and copy, mono kept for labels/buttons, serif italic kept for accent words.
+   Motion: transform/opacity only; loops pause off-screen (--ps via .live); reduced-motion turns it all off. */
+b.hl{font-weight:inherit}
+.cico,.fx-deco{display:none}
+.sitefx{--f-display:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--f-head:var(--f-display);--em1:#2BB5F5;--em2:#BFE9FF}
+.sitefx .tone-light{--em1:#0A5DB0;--em2:#1BA6F0}
+.sitefx .book{--em1:#04122B;--em2:#0A4A9A}
+.sitefx .sec{overflow:hidden}
+.sitefx .sec:not(.live),.sitefx .strip:not(.live),.sitefx .footer:not(.live){--ps:paused}
+
+/* titles: big, bold, sentence case, words rise in, accent words get a gradient */
+.sitefx .h2{font-family:var(--f-display);font-weight:700;text-transform:none;letter-spacing:-.03em;line-height:1.02;font-size:clamp(2.4rem,6vw,4.8rem)}
+.sitefx .h2 em{font-weight:600;letter-spacing:-.015em;font-size:1.06em}
+.sitefx .h2 .wi{display:inline-block}
+.sitefx .h2 em .wi{padding:.1em .1em .22em;margin:-.1em -.1em -.22em;text-shadow:none;color:transparent;background-image:linear-gradient(100deg,var(--em1),var(--em2));-webkit-background-clip:text;background-clip:text}
+.sitefx .tone-char .h2 em,.sitefx .tone-navy .h2 em,.sitefx .tone-dark .h2 em{filter:drop-shadow(0 0 14px rgba(43,181,245,.45))}
+.sitefx .h2.reveal{opacity:1;transform:none;transition:none}
+.js .sitefx .h2 .wi{opacity:0;transform:translate3d(0,.6em,0) rotate(3deg);transform-origin:0 100%}
+.js .sitefx .h2.in .wi{opacity:1;transform:none;transition:opacity .8s ease calc(var(--i) * 65ms + .05s),transform 1.1s var(--ease) calc(var(--i) * 65ms + .05s)}
+.sitefx .eyebrow::after{transform-origin:left;transition:transform 1.3s var(--ease) .35s}
+.js .sitefx .eyebrow.reveal:not(.in)::after{transform:scaleX(0)}
+
+/* huge outlined section numbers behind the titles (and on the cards) */
+.sitefx .sec-head{position:relative}
+.sitefx .sec-head>*{position:relative;z-index:1}
+.sitefx .sec-head::before{content:attr(data-n);position:absolute;right:0;bottom:-.14em;z-index:0;font:700 clamp(5rem,11vw,9.5rem)/1 var(--f-display);letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px var(--line);pointer-events:none}
+@supports (animation-timeline:view()){
+  .sitefx .sec-head::before{animation:ghost linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+  @keyframes ghost{from{transform:translate3d(0,60px,0)}to{transform:translate3d(0,-60px,0)}}
+}
+@media (max-width:700px){.sitefx .sec-head::before{font-size:5rem;top:-.55em;bottom:auto;opacity:.8}.sitefx .card::after{font-size:4.6rem}}
+.sitefx .book-side .h2{font-size:clamp(2.2rem,4.4vw,3.6rem)}
+
+/* copy: a readable face, bigger leads, key phrases get a highlighter swipe */
+.sitefx .lede{font-family:var(--f-display);font-size:clamp(1.08rem,1.55vw,1.3rem);line-height:1.6;color:var(--ink);max-width:58ch}
+.sitefx .card p,.sitefx .way p,.sitefx .way li,.sitefx .step p,.sitefx .mat p.copy,.sitefx .about p,.sitefx .gal-note,.sitefx .hero-copy,.sitefx .book-side li,.sitefx .fact span,.sitefx .fine,.sitefx .done p{font-family:var(--f-display)}
+.sitefx .card p{font-size:15.5px;line-height:1.65}
+.sitefx .way p{font-size:16.5px;line-height:1.65}
+.sitefx .way li,.sitefx .book-side li{font-size:15.5px}
+.sitefx .step p{font-size:15px;line-height:1.6}
+.sitefx .about p{font-size:17px;line-height:1.7}
+.sitefx .about p:first-of-type{font-size:1.22rem;line-height:1.55;color:var(--white)}
+.sitefx .mat p.copy{font-size:15.5px}
+.sitefx .gal-note{font-size:14.5px}
+.sitefx .hero-copy{font-size:14.5px;line-height:1.65}
+.sitefx .fact span{font-size:16px;font-weight:500}
+.sitefx .hl{font-weight:500;color:var(--white);background-image:linear-gradient(transparent 62%,rgba(43,181,245,.4) 62%);background-repeat:no-repeat;background-size:100% 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size .9s var(--ease) .5s}
+.sitefx .book .hl{background-image:linear-gradient(transparent 62%,rgba(255,255,255,.6) 62%)}
+.js .sitefx .reveal:not(.in) .hl,.js .sitefx .hero-copy .hl{background-size:0 100%}
+.js .sitefx.ready .hero-copy .hl{background-size:100% 100%;transition-delay:1.1s}
+
+/* titles inside cards, steps and panels */
+.sitefx .card h3{font-size:1.5rem;font-weight:700;letter-spacing:-.015em;text-transform:none;line-height:1.12}
+.sitefx .way h3{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:700;letter-spacing:-.025em;text-transform:none;line-height:1.05;text-shadow:none}
+.sitefx .step h3{font-size:1.35rem;font-weight:700;letter-spacing:-.01em;text-transform:none}
+.sitefx .mat h3{font-size:1.4rem;font-weight:700;letter-spacing:-.01em;text-transform:none}
+.sitefx .rv-title{font-family:var(--f-display);font-size:1.05rem;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+.sitefx .info-row .big{font-weight:700;letter-spacing:-.01em;font-size:clamp(1.4rem,2.6vw,2rem)}
+.sitefx .info-row .big.is-ph,.sitefx .menu-side .big.is-ph{font-size:1.02rem;font-weight:400;letter-spacing:.06em}
+.sitefx .done h3{text-transform:none;letter-spacing:-.01em;font-size:2rem}
+
+/* stats strip */
+.sitefx .cell .big{font-family:var(--f-display);font-weight:700;font-size:clamp(1.8rem,3.4vw,2.9rem);letter-spacing:-.02em}
+.sitefx .cell .big sup{font-size:.45em}
+.sitefx .cico{display:block;width:30px;height:30px;margin-bottom:12px;color:#06214A}
+.js .sitefx .cell:not(.in) .cico{transform:scale(.3) rotate(-30deg);opacity:0}
+.sitefx .cell.in .cico{transition:transform .8s cubic-bezier(.34,1.56,.64,1) .35s,opacity .5s ease .35s}
+@media (hover:hover){.sitefx .cell:hover .cico{transform:scale(1.25) rotate(-8deg)}}
+.sitefx .strip{overflow:hidden}
+.sitefx .strip::after{content:"";position:absolute;top:0;bottom:0;left:0;width:28%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:translateX(-130%) skewX(-18deg);animation:stripshine 7s ease-in-out 2s infinite;animation-play-state:var(--ps)}
+@keyframes stripshine{0%,58%{transform:translateX(-130%) skewX(-18deg)}100%{transform:translateX(520%) skewX(-18deg)}}
+
+/* services */
+.sitefx .card>*{position:relative;z-index:1}
+.sitefx .card .ico{width:64px;height:64px;padding:15px;margin:30px 0 24px;border:1px solid var(--line-hard);background:rgba(43,181,245,.08);transition:background .35s,color .35s,transform .5s var(--ease),border-color .35s}
+.sitefx .card::after{content:attr(data-n);position:absolute;right:14px;bottom:-.34em;z-index:0;font:700 6.5rem/1 var(--f-display);letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px var(--line);pointer-events:none;transition:-webkit-text-stroke-color .4s,transform .6s var(--ease)}
+.sitefx .card h3::after{content:"";display:block;width:100%;height:2px;margin-top:16px;background:var(--arc);transform-origin:left;transform:scaleX(.16);transition:transform .7s var(--ease)}
+.js .sitefx .card:not(.in) h3::after{transform:scaleX(0)}
+@media (hover:hover){
+  .sitefx .card:hover .ico{background:var(--arc);color:#04122B;border-color:var(--arc);transform:translateY(-4px) rotate(-4deg)}
+  .sitefx .card:hover::after{-webkit-text-stroke-color:var(--arc);transform:translateY(-8px)}
+  .sitefx .card:hover h3::after{transform:scaleX(1)}
+}
+
+/* our work: tiles wipe in, photos settle */
+.sitefx .gallery.reveal{opacity:1;transform:none;transition:none}
+.js .sitefx .gallery:not(.in) .shot{clip-path:inset(0 100% 0 0)}
+.sitefx .gallery.in .shot{clip-path:inset(0);transition:clip-path 1.1s var(--ease) calc(var(--i,0) * 130ms)}
+.sitefx .shot img{transition:transform .9s var(--ease),scale 1.8s var(--ease) calc(var(--i,0) * 130ms)}
+.js .sitefx .gallery:not(.in) .shot img{scale:1.3}
+.sitefx .shot figcaption{transition:transform .8s var(--ease) calc(var(--i,0) * 130ms + .5s)}
+.js .sitefx .gallery:not(.in) .shot figcaption{transform:translateY(100%)}
+
+/* how we work */
+.sitefx .step{border-top-color:transparent}
+.sitefx .step::after{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;background:rgba(140,200,255,.5);transform-origin:left;transition:transform 1.1s var(--ease) calc(var(--d,0s) + .15s)}
+.sitefx .step::before{transition:transform .6s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + .3s)}
+.js .sitefx .step:not(.in)::after{transform:scaleX(0)}
+.js .sitefx .step:not(.in)::before{transform:rotate(45deg) scale(0)}
+.sitefx .step .n{font-family:var(--f-display);font-weight:700;font-size:clamp(2.8rem,4.6vw,3.8rem);letter-spacing:-.03em;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--arc);margin-bottom:6px;transition:color .4s}
+@media (hover:hover){.sitefx .step:hover .n{color:var(--arc)}}
+.sitefx .steps::after{content:"";position:absolute;top:-1px;left:0;width:14%;height:3px;pointer-events:none;background:linear-gradient(90deg,transparent,#8FDDFF,transparent);transform:translateX(-100%);animation:flow 5.5s linear 1.5s infinite;animation-play-state:var(--ps)}
+@keyframes flow{to{transform:translateX(780%)}}
+@media (max-width:860px){.sitefx .steps::after{display:none}}
+.js .sitefx .way li{opacity:0;transform:translateX(-16px)}
+.sitefx .ways.in .way li{opacity:1;transform:none;transition:opacity .7s ease,transform .9s var(--ease)}
+.sitefx .ways.in .way li:nth-child(1){transition-delay:.45s}.sitefx .ways.in .way li:nth-child(2){transition-delay:.55s}.sitefx .ways.in .way li:nth-child(3){transition-delay:.65s}
+.sitefx .ways.in .way+.way li:nth-child(1){transition-delay:.6s}.sitefx .ways.in .way+.way li:nth-child(2){transition-delay:.7s}.sitefx .ways.in .way+.way li:nth-child(3){transition-delay:.8s}
+
+/* about */
+.js .sitefx .facts .fact{opacity:0;transform:translateX(30px)}
+.sitefx .facts.in .fact{opacity:1;transform:none;transition:opacity .7s ease,transform .9s var(--ease),background-color .3s}
+.sitefx .facts.in .fact:nth-child(1){transition-delay:.2s,.2s,0s}.sitefx .facts.in .fact:nth-child(2){transition-delay:.28s,.28s,0s}.sitefx .facts.in .fact:nth-child(3){transition-delay:.36s,.36s,0s}
+.sitefx .facts.in .fact:nth-child(4){transition-delay:.44s,.44s,0s}.sitefx .facts.in .fact:nth-child(5){transition-delay:.52s,.52s,0s}.sitefx .facts.in .fact:nth-child(6){transition-delay:.6s,.6s,0s}
+@media (hover:hover){.sitefx .fact:hover{background:rgba(11,95,168,.07)}}
+.js .sitefx .mat .tag,.js .sitefx .info .tag{opacity:0;transform:scale(.7)}
+.sitefx .mat.in .tag,.sitefx .info.in .tag{opacity:1;transform:none;transition:opacity .5s ease calc(var(--i,0) * 55ms + .3s),transform .7s cubic-bezier(.34,1.56,.64,1) calc(var(--i,0) * 55ms + .3s)}
+.sitefx .napit img{animation:bob2 5s ease-in-out infinite;animation-play-state:var(--ps)}
+@keyframes bob2{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-5px,0)}}
+
+/* quote */
+.sitefx .fx-deco{display:block;position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.sitefx .book .wrap{position:relative;z-index:1}
+.sitefx .book .rv-orb{background:radial-gradient(circle,rgba(255,255,255,.7),rgba(255,255,255,0) 68%)}
+.sitefx .book .rv-orb.o2{top:auto;bottom:-10%}
+.js .sitefx .book-side li{opacity:0;transform:translateX(-18px)}
+.sitefx .book-side ul.in li{opacity:1;transform:none;transition:opacity .7s ease,transform .9s var(--ease)}
+.sitefx .book-side ul.in li:nth-child(1){transition-delay:.3s}.sitefx .book-side ul.in li:nth-child(2){transition-delay:.4s}.sitefx .book-side ul.in li:nth-child(3){transition-delay:.5s}
+.sitefx .field input,.sitefx .field textarea{background-image:linear-gradient(var(--arc),var(--arc));background-repeat:no-repeat;background-position:0 100%;background-size:0 2px;transition:border-color .3s,background-size .6s var(--ease)}
+.sitefx .field input:focus,.sitefx .field textarea:focus{background-size:100% 2px}
+
+/* contact */
+.js .sitefx .info .info-row{opacity:0;transform:translateX(-26px)}
+.sitefx .info.in .info-row{opacity:1;transform:none;transition:opacity .7s ease,transform .9s var(--ease)}
+.sitefx .info.in .info-row:nth-child(1){transition-delay:.2s}.sitefx .info.in .info-row:nth-child(2){transition-delay:.28s}.sitefx .info.in .info-row:nth-child(3){transition-delay:.36s}
+.sitefx .info.in .info-row:nth-child(4){transition-delay:.44s}.sitefx .info.in .info-row:nth-child(5){transition-delay:.52s}.sitefx .info.in .info-row:nth-child(6){transition-delay:.6s}.sitefx .info.in .info-row:nth-child(7){transition-delay:.68s}
+.js .sitefx .map:not(.in) iframe{clip-path:inset(0 0 100% 0)}
+.sitefx .map.in iframe{clip-path:inset(0);transition:clip-path 1.3s var(--ease) .2s}
+.sitefx .map .pin::before{content:"";display:inline-block;width:8px;height:8px;margin-right:10px;border-radius:50%;background:var(--arc);box-shadow:0 0 0 0 rgba(43,181,245,.7);animation:pinping 2.2s ease-out infinite;animation-play-state:var(--ps)}
+@keyframes pinping{70%,100%{box-shadow:0 0 0 12px rgba(43,181,245,0)}}
+
+/* light running along section edges and the footer */
+.sitefx .tone-char::before,.sitefx .tone-navy::before,.sitefx .tone-dark::before{content:"";position:absolute;top:0;left:0;z-index:2;width:30%;height:2px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--arc),transparent);transform:translateX(-100%);animation:edge 8s linear infinite;animation-play-state:var(--ps)}
+.sitefx .tone-navy::before{background:linear-gradient(90deg,transparent,#8FDDFF,transparent)}
+@keyframes edge{to{transform:translateX(340%)}}
+.sitefx .footer{position:relative;overflow:hidden;border-top:0}
+.sitefx .footer::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--arc)}
+.sitefx .footer::after{content:"";position:absolute;left:0;top:0;width:22%;height:4px;pointer-events:none;background:linear-gradient(90deg,transparent,#fff,transparent);transform:translateX(-120%);animation:footrun 6s linear infinite;animation-play-state:var(--ps)}
+@keyframes footrun{to{transform:translateX(500%)}}
+@media (prefers-reduced-motion:reduce){.sitefx .strip::after,.sitefx .steps::after,.sitefx .footer::after,.sitefx .tone-char::before,.sitefx .tone-navy::before,.sitefx .tone-dark::before{display:none}}
 </style>
 </head>
 
-<body>
+<body class="sitefx">
+<!-- Livelier type + motion across the site: remove the "sitefx" class from <body> to switch it all off (the Reviews section has its own "rvfx" switch). -->
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
 
@@ -747,7 +901,7 @@ p.is-ph{display:inline-block;margin-top:18px}
     <canvas id="sceneCv"></canvas>
   </div>
 
-  <p class="hero-copy hero-fade" style="--d:.55s">Wrexham electricians specialising in EV charger installation. Punctual, professional and thorough, with clear communication, careful safety checks and neat finishes. We also carry out EICRs, electrical safety checks and domestic electrical work.</p>
+  <p class="hero-copy hero-fade" style="--d:.55s">Wrexham electricians specialising in <b class="hl">EV charger installation</b>. Punctual, professional and thorough, with clear communication, careful safety checks and neat finishes. We also carry out EICRs, electrical safety checks and domestic electrical work.</p>
 
   <div class="hero-title">
     <h1 class="h1">
@@ -772,10 +926,10 @@ p.is-ph{display:inline-block;margin-top:18px}
 
 <div class="strip">
   <div class="wrap">
-    <div class="cell reveal"><div class="big"><span data-count="9.97" data-dec="2">9.97</span><sup>/10</sup></div><p class="label">Checkatrade rating</p></div>
-    <div class="cell reveal" style="--d:.08s"><div class="big">NAPIT</div><p class="label">Accredited · Electrical</p></div>
-    <div class="cell reveal" style="--d:.16s"><div class="big">£1,000</div><p class="label">Checkatrade guarantee, T&amp;Cs apply</p></div>
-    <div class="cell reveal" style="--d:.24s"><div class="big">Vetted</div><p class="label">Up to 12 Checkatrade checks</p></div>
+    <div class="cell reveal"><svg class="cico" aria-hidden="true"><use href="#i-star"/></svg><div class="big"><span data-count="9.97" data-dec="2">9.97</span><sup>/10</sup></div><p class="label">Checkatrade rating</p></div>
+    <div class="cell reveal" style="--d:.08s"><svg class="cico" aria-hidden="true"><use href="#i-badge"/></svg><div class="big">NAPIT</div><p class="label">Accredited · Electrical</p></div>
+    <div class="cell reveal" style="--d:.16s"><svg class="cico" aria-hidden="true"><use href="#i-shield"/></svg><div class="big">£1,000</div><p class="label">Checkatrade guarantee, T&amp;Cs apply</p></div>
+    <div class="cell reveal" style="--d:.24s"><svg class="cico" aria-hidden="true"><use href="#i-check"/></svg><div class="big">Vetted</div><p class="label">Up to 12 Checkatrade checks</p></div>
   </div>
 </div>
 
@@ -785,7 +939,7 @@ p.is-ph{display:inline-block;margin-top:18px}
     <div class="sec-head">
       <div class="eyebrow reveal"><b>02</b> Services</div>
       <h2 class="h2 reveal" style="--d:.05s">Safe, tidy work, <em>done properly.</em></h2>
-      <p class="lede reveal" style="--d:.1s">Home EV charging is our speciality, backed by the everyday electrical work homeowners and landlords need. Every job is planned with you, installed neatly and tested before we leave.</p>
+      <p class="lede reveal" style="--d:.1s"><b class="hl">Home EV charging is our speciality</b>, backed by the everyday electrical work homeowners and landlords need. Every job is planned with you, installed neatly and tested before we leave.</p>
     </div>
 
     <div class="services">
@@ -854,7 +1008,7 @@ p.is-ph{display:inline-block;margin-top:18px}
     <div class="sec-head">
       <div class="eyebrow reveal"><b>04</b> Our work</div>
       <h2 class="h2 reveal" style="--d:.05s">Recent <em>installs.</em></h2>
-      <p class="lede reveal" style="--d:.1s">A selection of recent EV charger installations from our Checkatrade profile. Each one is planned around the property, cabled neatly and tested before handover.</p>
+      <p class="lede reveal" style="--d:.1s">A selection of <b class="hl">recent EV charger installations</b> from our Checkatrade profile. Each one is planned around the property, cabled neatly and tested before handover.</p>
     </div>
     <div class="gallery reveal" id="gallery"></div>
     <p class="gal-note reveal">Photos are shown at reduced size. See every photo and all customer reviews on our Checkatrade profile.</p>
@@ -888,13 +1042,13 @@ p.is-ph{display:inline-block;margin-top:18px}
       <div class="way">
         <span class="label">Option A</span>
         <h3>EV charger installation</h3>
-        <p>Planning to switch to electric? We help you choose a suitable charger and position, then install and test it so it is ready to use.</p>
+        <p>Planning to switch to electric? We help you <b class="hl">choose a suitable charger and position</b>, then install and test it so it is ready to use.</p>
         <ul><li>Help choosing units and layouts</li><li>Neat installation with extensive safety checks</li><li>Quotes for homes across Wrexham</li></ul>
       </div>
       <div class="way">
         <span class="label">Option B</span>
         <h3>Electrical checks &amp; repairs</h3>
-        <p>Need an EICR, a safety check or electrical work around the home? We inspect, test and put right what is needed.</p>
+        <p>Need an EICR, a safety check or electrical work around the home? We <b class="hl">inspect, test and put right</b> what is needed.</p>
         <ul><li>Electrical Installation Condition Reports</li><li>Certification and remedial fixes</li><li>Clear communication from first call to final test</li></ul>
       </div>
     </div>
@@ -916,8 +1070,8 @@ p.is-ph{display:inline-block;margin-top:18px}
         <div class="eyebrow reveal"><b>06</b> About us</div>
         <h2 class="h2 reveal" style="--d:.05s">Reliable electricians. <em>Neat, safe work.</em></h2>
         <div class="reveal" style="--d:.1s;margin-top:28px">
-          <p>S N Electrical Services is run by Shaun Gillanders and covers Wrexham and the surrounding area. We specialise in EV charger installation, and also carry out electrical condition reports, safety checks and everyday electrical work for homeowners.</p>
-          <p>Our reviews keep coming back to the same things: punctual, professional, good communication, extensive safety checks and neat, thorough work. That is the standard we hold ourselves to, from a single charge point to a full extension.</p>
+          <p>S N Electrical Services is run by <b class="hl">Shaun Gillanders</b> and covers Wrexham and the surrounding area. We specialise in <b class="hl">EV charger installation</b>, and also carry out electrical condition reports, safety checks and everyday electrical work for homeowners.</p>
+          <p>Our reviews keep coming back to the same things: punctual, professional, good communication, extensive safety checks and <b class="hl">neat, thorough work</b>. That is the standard we hold ourselves to, from a single charge point to a full extension.</p>
           <p class="is-ph">[Add a short personal introduction, background and years of experience here]</p>
         </div>
       </div>
@@ -934,7 +1088,7 @@ p.is-ph{display:inline-block;margin-top:18px}
     <div class="mat reveal">
       <div>
         <h3>Accreditation</h3><p class="label">Registered &amp; vetted</p>
-        <p class="copy">We are accredited by NAPIT for electrical work, and our company has passed up to 12 Checkatrade vetting checks covering identity, qualifications and accreditations, and the business itself.</p>
+        <p class="copy">We are accredited by <b class="hl">NAPIT</b> for electrical work, and our company has passed up to 12 Checkatrade vetting checks covering identity, qualifications and accreditations, and the business itself.</p>
         <div class="tags"><span class="tag">NAPIT</span><span class="tag">Checkatrade vetted</span></div>
         <div class="napit">
           <img src="images/cert-napit.png" alt="NAPIT" width="56" height="68" loading="lazy">
@@ -954,11 +1108,18 @@ p.is-ph{display:inline-block;margin-top:18px}
 
 <!-- ═════ BOOK ═════ -->
 <section class="sec book" id="book" data-sec="Quote">
+  <div class="fx-deco" aria-hidden="true">
+    <i class="rv-orb o1"></i><i class="rv-orb o2"></i>
+    <i class="rv-spark" style="--x:12%;--t:12s;--dl:-2s;--r:-12deg;--dx:26px;--c:#fff"></i>
+    <i class="rv-spark" style="--x:38%;--t:14s;--dl:-8s;--r:10deg;--dx:-24px;--c:#fff"></i>
+    <i class="rv-spark" style="--x:63%;--t:11s;--dl:-5s;--r:-8deg;--dx:22px;--c:#fff"></i>
+    <i class="rv-spark" style="--x:88%;--t:13s;--dl:-10s;--r:14deg;--dx:-28px;--c:#fff"></i>
+  </div>
   <div class="wrap book-grid">
     <div class="book-side">
       <div class="eyebrow reveal"><b>07</b> Request a quote</div>
       <h2 class="h2 reveal" style="--d:.05s">Let’s talk <em>about your job.</em></h2>
-      <p class="lede reveal" style="--d:.1s">Tell us what you need and when suits you for a call or visit, and we’ll get back to you to confirm.</p>
+      <p class="lede reveal" style="--d:.1s">Tell us what you need and when suits you for a call or visit, and we’ll <b class="hl">get back to you</b> to confirm.</p>
       <ul class="reveal" style="--d:.15s">
         <li><span>01</span>Choose a weekday and a preferred time</li>
         <li><span>02</span>Tell us about the property and the job</li>
@@ -1024,7 +1185,7 @@ p.is-ph{display:inline-block;margin-top:18px}
     <div class="sec-head">
       <div class="eyebrow reveal"><b>08</b> Contact</div>
       <h2 class="h2 reveal" style="--d:.05s">Get in touch <em>in Wrexham.</em></h2>
-      <p class="lede reveal" style="--d:.1s">Planning an EV charger or need an electrical check? Send us a few details and we’ll come back to you. S N Electrical Services covers Wrexham and the surrounding area.</p>
+      <p class="lede reveal" style="--d:.1s">Planning an <b class="hl">EV charger</b> or need an electrical check? Send us a few details and we’ll come back to you. S N Electrical Services covers Wrexham and the surrounding area.</p>
     </div>
     <div class="contact-grid">
       <div class="info reveal">
@@ -1248,7 +1409,7 @@ if(window.matchMedia('(hover:hover)').matches){
   function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
   box.innerHTML=PHOTOS.map(function(p,i){
     var n=('0'+(i+1)).slice(-2),cap='<figcaption><b>'+n+'</b>'+esc(p.title)+'</figcaption>';
-    return '<figure class="shot"><span class="tick"></span>'+(p.src
+    return '<figure class="shot" style="--i:'+i+'"><span class="tick"></span>'+(p.src
       ?'<img src="'+esc(p.src)+'" alt="'+esc(p.alt||p.title)+'" style="object-position:'+esc(p.pos||'50% 50%')+'" loading="lazy" decoding="async">'
       :'<div class="ph" role="img" aria-label="Photo placeholder: '+esc(p.title)+'"><span>Photo '+n+' · add image</span></div>')+cap+'</figure>';
   }).join('');
@@ -1302,6 +1463,40 @@ if(window.matchMedia('(hover:hover)').matches){
       c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg');c.style.setProperty('--my','-80%');
     });
   });
+})();
+
+/* ═══ Site effects: only while <body> has the "sitefx" class (remove it in the HTML to switch them all off) ═══ */
+(function(){
+  if(!document.body.classList.contains('sitefx'))return;
+  // section titles: split into words that rise in one by one (the heading keeps its full text for screen readers)
+  $$('.sec-head .h2').forEach(function(h){
+    var n=0;
+    h.setAttribute('aria-label',h.textContent.replace(/\s+/g,' ').trim());
+    (function walk(node){
+      Array.prototype.slice.call(node.childNodes).forEach(function(c){
+        if(c.nodeType===3){
+          var frag=document.createDocumentFragment();
+          c.nodeValue.split(/(\s+)/).forEach(function(t){
+            if(!t)return;
+            if(/^\s+$/.test(t)){frag.appendChild(document.createTextNode(' '));return}
+            var s=document.createElement('span');s.className='wi';s.setAttribute('aria-hidden','true');s.style.setProperty('--i',n++);s.textContent=t;frag.appendChild(s);
+          });
+          node.replaceChild(frag,c);
+        }else if(c.nodeType===1)walk(c);
+      });
+    })(h);
+  });
+  // big outlined section numbers behind the titles, and on the service cards
+  $$('.sec-head').forEach(function(sh){var b=$('.eyebrow b',sh);if(b)sh.dataset.n=b.textContent.trim()});
+  $$('.card').forEach(function(c){var s=$('.num span',c);if(s)c.dataset.n=s.textContent.trim()});
+  // stagger index for tag groups
+  $$('.tags').forEach(function(t){Array.prototype.forEach.call(t.children,function(c,i){c.style.setProperty('--i',i)})});
+  // looping animations run only while their section is on (or near) the screen
+  var loopers=$$('.sec,.strip,.footer');
+  if('IntersectionObserver' in window){
+    var lo=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('live',e.isIntersecting)})},{rootMargin:'120px 0px'});
+    loopers.forEach(function(s){lo.observe(s)});
+  }else loopers.forEach(function(s){s.classList.add('live')});
 })();
 
 /* ═══ Quote request ═══ */
